@@ -104,7 +104,8 @@
           minutes = minutes < 10 ? "0" + minutes : minutes;
           seconds = seconds < 10 ? "0" + seconds : seconds;
 
-          display.textContent = minutes + ":" + seconds;
+          var localDisplay = display;
+          localDisplay.textContent = minutes + ":" + seconds;
 
           setInterval(function () {
               if (!clock.active) return;
@@ -112,7 +113,7 @@
               if ((clock == c1 || clock == c2) && c1.count > 3) return;
               if ((clock == c3 || clock == c4) && c3.count > 3) return;
 
-              display.style.backgroundColor = 'green';
+              localDisplay.style.backgroundColor = 'green';
 
               minutes = parseInt(clock.timer / 60, 10);
               seconds = parseInt(clock.timer % 60, 10);
@@ -120,7 +121,7 @@
               minutes = minutes < 10 ? "0" + minutes : minutes;
               seconds = seconds < 10 ? "0" + seconds : seconds;
 
-              display.textContent = minutes + ":" + seconds;
+              localDisplay.textContent = minutes + ":" + seconds;
 
               if (--clock.timer < 0) {
                   c1.active = false;
@@ -128,7 +129,7 @@
                   c3.active = false;
                   c4.active = false;
                   beep();
-                  display.style.backgroundColor = 'red'
+                  localDisplay.style.backgroundColor = 'red'
                   alert("Game Over");
               }
           }, 1000);
