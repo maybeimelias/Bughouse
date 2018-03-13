@@ -4,11 +4,11 @@
   </head>
 
   <body style='height:100%;width:100%;'>
-    <button id="c1" onclick="click1()" style='width:49%;height:49%'>Start 1</button>
-    <button id="c3" onclick="click3()" style='width:49%;height:49%'>Start 3</button>
+    <button id="c1" onclick="click1()" style='width:49%;height:49%;font-size:10vw'>Start 1</button>
+    <button id="c3" onclick="click3()" style='width:49%;height:49%';font-size:10vw>Start 3</button>
     <br/>
-    <button id="c2" onclick="click2()" style='width:49%;height:49%'>Start 2</button>
-    <button id="c4" onclick="click4()" style='width:49%;height:49%'>Start 4</button>
+    <button id="c2" onclick="click2()" style='width:49%;height:49%';font-size:10vw>Start 2</button>
+    <button id="c4" onclick="click4()" style='width:49%;height:49%';font-size:10vw>Start 4</button>
 
     <script>
       c1.count = 0;
@@ -21,6 +21,8 @@
           c2.active = true;
           c1.count++;
           c3.count = 0;
+
+          document.getElementById("c1").style.backgroundColor = 'green';
 
          if (c1.count > 3) {
               document.getElementById("c1").style.backgroundColor = 'yellow';
@@ -39,6 +41,8 @@
           c2.active = false;
           c1.count++;
           c3.count = 0;
+
+          document.getElementById("c2").style.backgroundColor = 'green';
 
           if (c1.count > 3) {
               document.getElementById("c1").style.backgroundColor = 'yellow';
@@ -59,6 +63,8 @@
           c3.count++;
           c1.count = 0;
 
+          document.getElementById("c3").style.backgroundColor = 'green';
+
           if (c3.count > 3) {
               document.getElementById("c3").style.backgroundColor = 'yellow';
               document.getElementById("c4").style.backgroundColor = 'yellow';
@@ -76,6 +82,8 @@
           c4.active = false;
           c3.count++;
           c1.count = 0;
+
+          document.getElementById("c4").style.backgroundColor = 'green';
 
           if (c3.count > 3) {
               document.getElementById("c3").style.backgroundColor = 'yellow';
