@@ -70,6 +70,9 @@ function updateClocks() {
 
   updateActiveClocks();
   drawClocks();
+  if (gameOver()) {
+    beep(200, function() { beep(200, function() { beep(200); }) });
+  }
 }
 
 function updateActiveClocks() {
@@ -114,3 +117,24 @@ function drawClock(clock, x, y, w, h) {
   ctx.textAlign = "center";
   ctx.fillText(getTimeText(clock.time), clock.x + clock.width / 2, clock.y + clock.height / 2);
 }
+
+var audioClass = window.audioContext ||window.AudioContext || window.AudioContext || window.webkitAudioContext
+var audioCtx = new audioClass();
+
+function beep(duration, finishedCallback) {
+  if (typeof finishedCallback != "function") {
+    finishedCallback = function () {};
+  }
+
+  var osc = audioCtx.createOscillator();
+
+  osc.connect(audioCtx.destination);
+  if (osc.noteOn) osc.noteOn(0);
+  if (osc.start) osc.start();
+
+  setTimeout(function () {
+    if (osc.noteOff) osc.noteOff(0);
+    if (osc.stop) osc.stop();
+    finishedCallback();
+  }, duration);
+};
