@@ -14,7 +14,7 @@ var height = canvas.height / 2 - 2 * border;
 var t1p1 = { time: timeControl, x: border, y: border, width: width, height: height };
 var t1p2 = { time: timeControl, x: canvas.width / 2 + border, y: border, width: width, height: height };
 var t2p1 = { time: timeControl, x: border, y: canvas.height / 2 + border, width: width, height: height };
-var t2p2 = { time: timeControl, w: canvas.width / 2 + border, y: canvas.height / 2 + border, width: width, height: height };
+var t2p2 = { time: timeControl, x: canvas.width / 2 + border, y: canvas.height / 2 + border, width: width, height: height };
 
 t1p1.active = true;
 
