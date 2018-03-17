@@ -26,17 +26,16 @@ function updateClocks() {
 }
 
 function drawClocks() {
-	var width = canvas.width / 2 - 2 * border;
+  var width = canvas.width / 2 - 2 * border;
   var height = canvas.height / 2 - 2 * border;
 
   drawClock(t1p1, border, border, width, height, 180);
-	drawClock(t1p2, canvas.width / 2 + border, border, width, height, 180);
-	drawClock(t2p1, border, canvas.height / 2 + border, width, height, 0);
-	drawClock(t2p2, canvas.width / 2 + border, canvas.height / 2 + border, width, height, 0);
+  drawClock(t1p2, canvas.width / 2 + border, border, width, height, 180);
+  drawClock(t2p1, border, canvas.height / 2 + border, width, height, 0);
+  drawClock(t2p2, canvas.width / 2 + border, canvas.height / 2 + border, width, height, 0);
 }
   
 function drawClock(clock, x, y, w, h, r) {
- 
   var minutes = parseInt(clock / 60, 10);
   var seconds = parseInt(clock % 60, 10);
   
