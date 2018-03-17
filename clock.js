@@ -17,22 +17,22 @@ function setupClocks(timeControl) {
   var width = canvas.width / 2 - 2 * border;
   var height = canvas.height / 2 - 2 * border;
 
-  var t1p1 = { time: timeControl, active: false, moveCount: 0, x: border, y: border, width: width, height: height };
-  var t1p2 = { time: timeControl, active: false, moveCount: 0, x: canvas.width / 2 + border, y: border, width: width, height: height };
-  var t2p1 = { time: timeControl, active: false, moveCount: 0, x: border, y: canvas.height / 2 + border, width: width, height: height };
-  var t2p2 = { time: timeControl, active: false, moveCount: 0, x: canvas.width / 2 + border, y: canvas.height / 2 + border, width: width, height: height };
+  var team1_player1 = { time: timeControl, active: false, moveCount: 0, x: border, y: border, width: width, height: height };
+  var team1_player2 = { time: timeControl, active: false, moveCount: 0, x: canvas.width / 2 + border, y: border, width: width, height: height };
+  var team2_player1 = { time: timeControl, active: false, moveCount: 0, x: border, y: canvas.height / 2 + border, width: width, height: height };
+  var team2_player2 = { time: timeControl, active: false, moveCount: 0, x: canvas.width / 2 + border, y: canvas.height / 2 + border, width: width, height: height };
 
-  t1p1.partner = t1p2;
-  t1p2.partner = t1p1;
-  t2p1.partner = t2p2;
-  t2p2.partner = t2p1;
+  team1_player1.partner = team1_player2;
+  team1_player2.partner = team1_player1;
+  team2_player1.partner = team2_player2;
+  team2_player2.partner = team2_player1;
 
-  t1p1.opponent = t2p1;
-  t2p1.opponent = t1p1;
-  t1p2.opponent = t2p2;
-  t2p2.opponent = t1p2;
+  team1_player1.opponent = team2_player1;
+  team2_player1.opponent = team1_player1;
+  team1_player2.opponent = team2_player2;
+  team2_player2.opponent = team1_player2;
   
-  return [t1p1, t1p2, t2p1, t2p2];
+  return [team1_player1, team1_player2, team2_player1, team2_player2];
 }
 
 function clickHandler(e) {
