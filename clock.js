@@ -5,8 +5,8 @@ canvas.width = window.innerWidth - 10;
 canvas.height = window.innerHeight - 10;
 canvas.addEventListener('click', clickHandler);
 
-var timeControl = 5 * 60;
-var increment = 2;
+var timeControl = parseInt(prompt("Time control", "5"), 10) * 60;
+var increment = parseInt(prompt("Increment", "0"), 10);
 var clocks = setupClocks(timeControl);
 
 drawClocks();
