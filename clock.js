@@ -5,8 +5,8 @@ canvas.width = window.innerWidth - 10;
 canvas.height = window.innerHeight - 10;
 canvas.addEventListener('click', clickHandler);
 
-var timeControl = 10;
-var increment = 1;
+var timeControl = 5 * 60;
+var increment = 2;
 var clocks = setupClocks(timeControl);
 
 drawClocks();
@@ -17,10 +17,10 @@ function setupClocks(timeControl) {
   var width = canvas.width / 2 - 2 * border;
   var height = canvas.height / 2 - 2 * border;
 
-  var t1p1 = { time: timeControl, x: border, y: border, width: width, height: height };
-  var t1p2 = { time: timeControl, x: canvas.width / 2 + border, y: border, width: width, height: height };
-  var t2p1 = { time: timeControl, x: border, y: canvas.height / 2 + border, width: width, height: height };
-  var t2p2 = { time: timeControl, x: canvas.width / 2 + border, y: canvas.height / 2 + border, width: width, height: height };
+  var t1p1 = { time: timeControl, active: false, moveCount: 0, x: border, y: border, width: width, height: height };
+  var t1p2 = { time: timeControl, active: false, moveCount: 0, x: canvas.width / 2 + border, y: border, width: width, height: height };
+  var t2p1 = { time: timeControl, active: false, moveCount: 0, x: border, y: canvas.height / 2 + border, width: width, height: height };
+  var t2p2 = { time: timeControl, active: false, moveCount: 0, x: canvas.width / 2 + border, y: canvas.height / 2 + border, width: width, height: height };
 
   t1p1.partner = t1p2;
   t1p2.partner = t1p1;
@@ -31,7 +31,7 @@ function setupClocks(timeControl) {
   t2p1.opponent = t1p1;
   t1p2.opponent = t2p2;
   t2p2.opponent = t1p2;
-
+  
   return [t1p1, t1p2, t2p1, t2p2];
 }
 
@@ -44,8 +44,12 @@ function clickHandler(e) {
     
     clock.active = false;
     clock.opponent.active = true;
+    
+    clock.moveCount++;
+    clock.partner.moveCount = 0;
       
     drawClocks();
+    if (isPaused(clock)) beep(100);
   }
 }
 
@@ -62,7 +66,7 @@ function clockHit(clock, e) {
 };
 
 function clockCanBeClicked(clock) {
-  return clock.active || (!clock.active && !clock.opponent.active);
+  return (clock.active || (!clock.active && !clock.opponent.active)) && !isPaused(clock);
 }
 
 function updateClocks() {
@@ -76,7 +80,7 @@ function updateClocks() {
 }
 
 function updateActiveClocks() {
-  clocks.forEach(function(clock) { if (clock.active) clock.time--; });
+  clocks.forEach(function(clock) { if (isActive(clock)) clock.time--; });
 }
 
 function drawClocks() {
@@ -98,7 +102,11 @@ function gameOver() {
 }
 
 function isActive(clock) {
-  return clock.active && !gameOver();
+  return clock.active && !isPaused(clock) && !gameOver();
+}
+
+function isPaused(clock) {
+  return (clock.moveCount > 3 || clock.opponent.moveCount > 3) && !gameOver();
 }
 
 function isLost(clock) {
@@ -108,6 +116,7 @@ function isLost(clock) {
 function drawClock(clock, x, y, w, h) {
   ctx.fillStyle = "lightgray";
   if (isActive(clock)) ctx.fillStyle = "green";
+  if (isPaused(clock)) ctx.fillStyle = "yellow";
   if (isLost(clock)) ctx.fillStyle = "red";
   ctx.fillRect(clock.x, clock.y, clock.width, clock.height);
   
