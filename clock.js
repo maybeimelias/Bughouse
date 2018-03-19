@@ -17,10 +17,10 @@ function setupClocks(timeControl) {
   var width = canvas.width / 2 - 2 * border;
   var height = canvas.height / 2 - 2 * border;
 
-  var team1_player1 = { time: timeControl, active: false, moveCount: 0, x: border, y: border, width: width, height: height };
-  var team1_player2 = { time: timeControl, active: false, moveCount: 0, x: canvas.width / 2 + border, y: border, width: width, height: height };
-  var team2_player1 = { time: timeControl, active: false, moveCount: 0, x: border, y: canvas.height / 2 + border, width: width, height: height };
-  var team2_player2 = { time: timeControl, active: false, moveCount: 0, x: canvas.width / 2 + border, y: canvas.height / 2 + border, width: width, height: height };
+  var team1_player1 = { team: 1, time: timeControl, active: false, moveCount: 0, x: border, y: border, width: width, height: height };
+  var team1_player2 = { team: 1, time: timeControl, active: false, moveCount: 0, x: canvas.width / 2 + border, y: border, width: width, height: height };
+  var team2_player1 = { team: 2, time: timeControl, active: false, moveCount: 0, x: border, y: canvas.height / 2 + border, width: width, height: height };
+  var team2_player2 = { team: 2, time: timeControl, active: false, moveCount: 0, x: canvas.width / 2 + border, y: canvas.height / 2 + border, width: width, height: height };
 
   team1_player1.partner = team1_player2;
   team1_player2.partner = team1_player1;
@@ -124,7 +124,12 @@ function drawClock(clock, x, y, w, h) {
   ctx.font = canvas.width * 0.15 + "px arial";
   ctx.textBaseline = "middle";
   ctx.textAlign = "center";
-  ctx.fillText(getTimeText(clock.time), clock.x + clock.width / 2, clock.y + clock.height / 2);
+  ctx.setTransform(1,0,0,1,0,0);
+  ctx.transform(1,0,0,1, clock.x + clock.width / 2, clock.y + clock.height / 2);
+  
+  if (clock.team === 1) ctx.rotate(Math.PI);
+  ctx.fillText(getTimeText(clock.time), 0, 0);
+  ctx.setTransform(1,0,0,1,0,0);
 }
 
 var audioClass = window.audioContext ||window.AudioContext || window.AudioContext || window.webkitAudioContext
