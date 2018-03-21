@@ -1,9 +1,13 @@
+document.body.addEventListener('touchmove', function(event) {
+  event.preventDefault();
+}, false);
+
 var canvas = document.getElementById("canvas");
 var ctx = canvas.getContext("2d");
 
 canvas.width = window.innerWidth - 10;
 canvas.height = window.innerHeight - 10;
-canvas.addEventListener('mousedown', clickHandler);
+canvas.addEventListener('touchstart', clickHandler);
 
 var timeControl = parseInt(prompt("Time control", "5"), 10) * 60;
 var increment = parseInt(prompt("Increment", "0"), 10);
@@ -38,6 +42,7 @@ function setupClocks(timeControl) {
 function clickHandler(e) {
   if (gameOver()) return;
   
+  e.preventDefault();
   var clock = getClickedClock(e);
   if (clock && clockCanBeClicked(clock)) {
     if (clock.active) clock.time += increment;
