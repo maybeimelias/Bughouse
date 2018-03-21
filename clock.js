@@ -42,7 +42,6 @@ function setupClocks(timeControl) {
 function clickHandler(e) {
   if (gameOver()) return;
   
-  e.preventDefault();
   var clock = getClickedClock(e);
   if (clock && clockCanBeClicked(clock)) {
     if (clock.active) clock.time += increment;
