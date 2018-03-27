@@ -1,13 +1,12 @@
-document.body.addEventListener('touchmove', function(event) {
-  event.preventDefault();
-}, false);
-
 var canvas = document.getElementById("canvas");
 var ctx = canvas.getContext("2d");
 
 canvas.width = window.innerWidth - 10;
 canvas.height = window.innerHeight - 10;
-canvas.addEventListener('touchstart', clickHandler);
+//canvas.addEventListener('click', clickHandler);
+canvas.addEventListener('touchstart', touchStartHandler);
+canvas.addEventListener('touchend', touchEndHandler);
+canvas.addEventListener('touchmove', touchMoveHandler);
 
 var timeControl = parseInt(prompt("Time control", "5"), 10) * 60;
 var increment = parseInt(prompt("Increment", "0"), 10);
@@ -39,9 +38,28 @@ function setupClocks(timeControl) {
   return [team1_player1, team1_player2, team2_player1, team2_player2];
 }
 
+function touchStartHandler(event) {
+	console.log(event);
+	clickHandler(event);
+}
+
+function touchMoveHandler(event) {
+	
+}
+
+function touchEndHandler(event) {
+	
+}
+
 function clickHandler(e) {
   if (gameOver()) return;
   
+  for(var i = 0; i < e.touches.length; i++) {
+  	touchHandler(e.touches[i]);
+  }
+}
+
+function touchHandler(e) {
   var clock = getClickedClock(e);
   if (clock && clockCanBeClicked(clock)) {
     if (clock.active) clock.time += increment;
@@ -55,6 +73,9 @@ function clickHandler(e) {
     drawClocks();
     if (isPaused(clock)) beep(100);
   }
+  else {
+  	console.log("else... shit");
+  }
 }
 
 function getClickedClock(e) {
@@ -66,6 +87,7 @@ function clockHit(clock, e) {
       clock.x <= e.clientX && clock.x + clock.width >= e.clientX &&
       clock.y <= e.clientY && clock.y + clock.height >= e.clientY;
 
+	console.log(hit);
   return hit;
 };
 
